@@ -7,6 +7,7 @@ def rastrigin(x, a=10):
         res += x_i ** 2 - a * cos(2 * pi * x_i)
     return res
 
+
 def rosenbrock(x, a=1, b=100):
     res = 0
     for i in range(len(x) - 1):
