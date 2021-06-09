@@ -30,3 +30,20 @@ class SimpleHC:
                 best_vec = current_vec
                 made_steps = 0
         return best_vec, best_val
+
+
+class ShotgunHC:
+    def __init__(self, seed=None):
+        self.simple_hc = SimpleHC(seed=seed)
+
+    def fit(self, *args, restarts_without_improve=100, **kwargs):
+        best_vec, best_val = self.simple_hc.fit(*args, **kwargs)
+        made_steps = 0
+        while made_steps != restarts_without_improve:
+            current_vec, current_val = self.simple_hc.fit(*args, **kwargs)
+            made_steps += 1
+            if current_val < best_val:
+                best_val = current_val
+                best_vec = current_vec
+                made_steps = 0
+        return best_vec, best_val
