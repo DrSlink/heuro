@@ -33,16 +33,22 @@ class Genetic:
     def __init__(self, seed=None):
         self.random = random.Random(seed)
 
-    def fit(self, func, constr, population_size=100,
-            steps_without_improve=100):
+    def fit(self, func, constr, population_size=10,
+            steps_without_improve=10):
         population = []
         for _ in range(population_size):
             population.append(Individual(self.random, func, constr))
         made_steps = 0
         population.sort(key=lambda x: x.fitness)
         best_ind = population[0]
+        yield (best_ind.vec, best_ind.fitness,
+               best_ind.vec, best_ind.fitness, True)
+        for ind in population:
+            yield best_ind.vec, best_ind.fitness, \
+                  ind.vec, ind.fitness, False
         while made_steps != steps_without_improve:
-            sum_fit = sum(ind.fitness for ind in population)
+            sum_fit = sum(ind.fitness for ind in population) + 0.01
+
             for ind in population:
                 ind.pair_prob = 1 - ind.fitness / sum_fit
             new_generation = []
@@ -58,7 +64,13 @@ class Genetic:
             population = population[:population_size]
             made_steps += 1
             current_best = population[0]
-            if current_best.fitness < best_ind.fitness:
+            is_better = current_best.fitness < best_ind.fitness
+            yield (best_ind.vec, best_ind.fitness,
+                   current_best.vec, current_best.fitness, is_better)
+            for ind in population:
+                yield (best_ind.vec, best_ind.fitness,
+                       ind.vec, ind.fitness, False)
+            if is_better:
                 best_ind = current_best
                 made_steps = 0
         return best_ind.vec, best_ind.fitness
