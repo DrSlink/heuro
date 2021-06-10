@@ -2,19 +2,15 @@ import random
 
 
 class SimpleHC:
-    def __init__(self, seed=None, callback=None):
+    def __init__(self, seed=None):
         self.random = random.Random(seed)
-        self.callback = callback
 
-    def mutate(self, vector, constr):
+    def mutate(self, vector, constr, annealing):
         new_vec = []
-        mutation_prob = 1 / len(vector)
         for i in range(len(vector)):
-            if self.random.random() < mutation_prob:
-                new_vec.append(self.random.triangular(constr[i][0],
-                                                      constr[i][1], vector[i]))
-            else:
-                new_vec.append(vector[i])
+            left = vector[i] + (constr[i][0] - vector[i]) * annealing
+            right = vector[i] + (constr[i][1] - vector[i]) * annealing
+            new_vec.append(self.random.triangular(left, right, vector[i]))
         return new_vec
 
     def fit(self, func, constr, steps_without_improve=10):
@@ -24,10 +20,13 @@ class SimpleHC:
         best_val = func(best_vec)
         yield best_vec, best_val, best_vec, best_val, True
         made_steps = 0
+        whole_steps = 1
         while made_steps != steps_without_improve:
-            current_vec = self.mutate(best_vec, constr)
+            annealing = 1 - whole_steps / (whole_steps + steps_without_improve)
+            current_vec = self.mutate(best_vec, constr, annealing)
             current_val = func(current_vec)
             made_steps += 1
+            whole_steps += 1
             is_better = current_val < best_val
             yield best_vec, best_val, current_vec, current_val, is_better
             if is_better:
