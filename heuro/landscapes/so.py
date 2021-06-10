@@ -1,3 +1,5 @@
+"""Test functions for single-objective optimisation."""
+
 from math import cos, pi
 
 
@@ -45,7 +47,19 @@ def rosenbrock(x: list, a: float = 1, b: float = 100) -> float:
     return res
 
 
-def sphere(x):
+def sphere(x: list) -> float:
+    """Sphere mathematical function.
+
+    Sphere function is a convex function.
+    Finding the minimum of this function is a fairly easy problem
+    It has a global minimum at x = [0,..,0], f(x) = 0
+
+    # Arguments:
+        x: A nonempty list of numbers
+
+    # Returns
+        Scalar function image
+    """
     res = 0
     for x_i in x:
         res += x_i ** 2
