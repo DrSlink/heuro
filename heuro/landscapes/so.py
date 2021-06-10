@@ -1,7 +1,21 @@
 from math import cos, pi
 
 
-def rastrigin(x, a=10):
+def rastrigin(x: list, a: float = 10) -> float:
+    """Rastrigin mathematical function.
+
+    Rastrigin function is a non-convex non-linear multimodal function.
+    Finding the minimum of this function is a fairly difficult problem
+    due to its large search space and its large number of local minima
+    It has a global minimum at x = [0,..,0], f(x) = 0
+
+    # Arguments:
+        x: A nonempty list of numbers
+        a: Constant, usually used 10
+
+    # Returns
+        Scalar function image
+    """
     res = a * len(x)
     for x_i in x:
         res += x_i ** 2 - a * cos(2 * pi * x_i)
