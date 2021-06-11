@@ -1,3 +1,4 @@
+"""Unit tests for functions and algorithms."""
 import unittest
 from heuro.landscapes.so import rastrigin
 from heuro.landscapes.so import rosenbrock
@@ -8,20 +9,24 @@ from heuro.population.evolution import Genetic
 
 
 class TestLandscapes(unittest.TestCase):
+    """Tests for landscapes."""
 
     def test_rastrigin_min(self):
+        """Test for Rastrigin function global minimum."""
         for i in range(1, 5):
             self.assertEqual(rastrigin([0] * i), 0,
                              f'incorrect value for min point with '
                              f'{i} dimentions')
 
     def test_rosenbrock_min(self):
+        """Test for Rosenbrock function global minimum."""
         for i in range(1, 5):
             self.assertEqual(rosenbrock([1] * i), 0,
                              f'incorrect value for min point with '
                              f'{i} dimentions')
 
     def test_sphere_min(self):
+        """Test for sphere function global minimum."""
         for i in range(1, 5):
             self.assertEqual(sphere([0] * i), 0,
                              f'incorrect value for min point with '
@@ -29,8 +34,10 @@ class TestLandscapes(unittest.TestCase):
 
 
 class TestPopulations(unittest.TestCase):
+    """Tests for population-based algorithms."""
 
     def test_simple_hc(self):
+        """Test for simple hill climbing algorithm converging."""
         shc = SimpleHC(seed=42)
         gen = shc.fit(sphere, [(-5., 5.), (-5., 5.)])
         conv = False
@@ -44,6 +51,7 @@ class TestPopulations(unittest.TestCase):
                         'simple hill climbing algorithm do not converge')
 
     def test_shotgun_hc(self):
+        """Test for shotgun hill climbing algorithm converging."""
         shc = ShotgunHC(seed=42)
         gen = shc.fit(sphere, [(-5., 5.), (-5., 5.)])
         conv = False
@@ -57,6 +65,7 @@ class TestPopulations(unittest.TestCase):
                         'shotgun hill climbing algorithm do not converge')
 
     def test_evolution_genetic(self):
+        """Test for genetic algorithm converging."""
         shc = Genetic(seed=42)
         gen = shc.fit(sphere, [(-5., 5.), (-5., 5.)])
         conv = False

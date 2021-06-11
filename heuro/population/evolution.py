@@ -56,7 +56,7 @@ class Genetic:
     """Classic genetic algorithm implementation."""
 
     def __init__(self, seed=None):
-        """Initialize of genetic algorithm solver.
+        """Initialize genetic algorithm solver.
 
         # Arguments:
             seed: starting number for random generator to create
