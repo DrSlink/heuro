@@ -11,12 +11,9 @@ def rastrigin(x: list, a: float = 10) -> float:
     due to its large search space and its large number of local minima
     It has a global minimum at x = [0,..,0], f(x) = 0
 
-    # Arguments:
-        x: A nonempty list of numbers
-        a: Constant, usually used 10
-
-    # Returns
-        Scalar function image
+    :param x: A nonempty list of numbers
+    :param a: Constant, usually used 10
+    :return: Scalar function image
     """
     res = a * len(x)
     for x_i in x:
@@ -33,13 +30,10 @@ def rosenbrock(x: list, a: float = 1, b: float = 100) -> float:
     To converge to the global minimum, however, is difficult.
     It has a global minimum at x = [1,..,1], f(x) = 0
 
-    # Arguments:
-        x: A nonempty list of numbers
-        a: Constant, usually used 10
-        b: Constant, usually used 100
-
-    # Returns
-        Scalar function image
+    :param x: A nonempty list of numbers
+    :param a: Constant, usually used 10
+    :param b: Constant, usually used 100
+    :return: Scalar function image
     """
     res = 0
     for i in range(len(x) - 1):
@@ -54,11 +48,9 @@ def sphere(x: list) -> float:
     Finding the minimum of this function is a fairly easy problem
     It has a global minimum at x = [0,..,0], f(x) = 0
 
-    # Arguments:
-        x: A nonempty list of numbers
+    :param x: A nonempty list of numbers
 
-    # Returns
-        Scalar function image
+    :return: Scalar function image
     """
     res = 0
     for x_i in x:
