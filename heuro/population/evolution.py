@@ -1,8 +1,19 @@
+"""Classes for evolutionary algorithms, like genetic algorithm."""
 import random
 
 
 class Individual:
+    """Basic unit of population in genetic algorithms."""
+
     def __init__(self, random_gen, func, constr=None, vec=None):
+        """Individual constructor.
+
+        # Arguments:
+            random_gen: random generator to create reproducible simulations
+            func: fitness function of individual
+            constr: constrains on parameters for fitness function
+            vec: alternative way to initialize not random individual
+        """
         self.random = random_gen
         if vec:
             self.vec = vec
@@ -13,6 +24,12 @@ class Individual:
         self.fitness = func(self.vec)
 
     def mutate(self, func, constr):
+        """Change individual a bit.
+
+        # Arguments:
+            func: fitness function of individual
+            constr: constrains on parameters for fitness function
+        """
         mutation_prob = 1 / len(self.vec)
         for i in range(len(self.vec)):
             if self.random.random() < mutation_prob:
@@ -21,6 +38,12 @@ class Individual:
         self.fitness = func(self.vec)
 
     def mate(self, pair, func):
+        """Create a new individual from pair of individuals.
+
+        # Arguments:
+            pair: second individual for mating
+            func: fitness function of individual
+        """
         new_vec = []
         for i in range(len(self.vec)):
             # new_vec.append(self.random.choice([self.vec[i], pair.vec[i]]))
@@ -30,11 +53,28 @@ class Individual:
 
 
 class Genetic:
+    """Classic genetic algorithm implementation."""
+
     def __init__(self, seed=None):
+        """Initialize of genetic algorithm solver.
+
+        # Arguments:
+            seed: starting number for random generator to create
+                reproducible simulations
+        """
         self.random = random.Random(seed)
 
     def fit(self, func, constr, population_size=10,
             steps_without_improve=10):
+        """Start genetic algorithm solver.
+
+        # Arguments:
+            func: fitness function of individual
+            constr: constrains on parameters for fitness function
+            population_size: number of individuals in population
+            steps_without_improve: number of generations without improvement
+                to stop algorithm
+        """
         population = []
         for _ in range(population_size):
             population.append(Individual(self.random, func, constr))
