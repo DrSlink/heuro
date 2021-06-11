@@ -1,12 +1,12 @@
 """Script for project run."""
-from landscapes.so import rastrigin
-from landscapes.so import rosenbrock
-from landscapes.so import sphere
-from population.hill_climbing import SimpleHC
-from population.hill_climbing import ShotgunHC
-from population.evolution import Genetic
+from heuro.landscapes.so import rastrigin
+from heuro.landscapes.so import rosenbrock
+from heuro.landscapes.so import sphere
+from heuro.population.hill_climbing import SimpleHC
+from heuro.population.hill_climbing import ShotgunHC
+from heuro.population.evolution import Genetic
 
-from gui.vision import Vision
+from heuro.gui.vision import Vision
 
 if __name__ == '__main__':
     constrains = [(-5., 5.), (-5., 5.)]
