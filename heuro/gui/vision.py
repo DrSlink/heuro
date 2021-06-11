@@ -12,8 +12,8 @@ class Vision(tk.Tk):
                  constr: list = None):
         """Class initialization."""
         super().__init__(master)
-        en = gettext.translation('heuro', localedir='heuro/po', languages=['en'])
-        ru = gettext.translation('heuro', localedir='heuro/po', languages=['ru'])
+        en = gettext.translation('heuro', localedir='po', languages=['en'])
+        ru = gettext.translation('heuro', localedir='po', languages=['ru'])
         self._ = en.gettext
         self.langs = {'en': en, 'ru': ru}
         self.lang_list = list(self.langs.keys())
