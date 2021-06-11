@@ -1,12 +1,16 @@
+"""Simple visual representation of algorithms work."""
 import tkinter as tk
 import gettext
 
 
 class Vision(tk.Tk):
+    """Simple visual representation of algorithms work."""
+
     def __init__(self, master=None,
                  functions: dict = None,
                  algorithms: dict = None,
                  constr: list = None):
+        """Class initialization."""
         super().__init__(master)
         en = gettext.translation('heuro', localedir='po', languages=['en'])
         ru = gettext.translation('heuro', localedir='po', languages=['ru'])
@@ -35,11 +39,13 @@ class Vision(tk.Tk):
         self.rowconfigure(0, weight=1)
 
     def change(self, a, b):
+        """Change label on menu."""
         a.set(b)
         func_idx = self.test_f_trans.index(self.variable_t.get())
         self.put_img(self.test_f_names[func_idx])
 
     def change_lang(self, value):
+        """Change app language."""
         _ = self.langs[value].gettext
 
         self.best_val_l['text'] = _("Best result")
@@ -69,6 +75,7 @@ class Vision(tk.Tk):
             self.algs_menu['menu'].add_command(label=alg, command=comm)
 
     def build_lang(self):
+        """Build language frame."""
         self.lang_frame = tk.Frame(self, bg=self.bg)
         self.lang_frame.grid(column=3, row=0, sticky='EN')
 
@@ -84,6 +91,7 @@ class Vision(tk.Tk):
         self.lang_frame.lang.grid(column=0, row=0)
 
     def draw_point(self, coords, color):
+        """Draw point on canvas."""
         w = int(self.canvas.cget("width"))
         h = int(self.canvas.cget("height"))
         self.canvas.create_oval(int(w / 2 * coords[0]),
@@ -93,6 +101,7 @@ class Vision(tk.Tk):
                                 width=2, outline=color)
 
     def draw_arrow(self, coords):
+        """Draw arrow on canvas."""
         w = int(self.canvas.cget("width"))
         h = int(self.canvas.cget("height"))
         self.canvas.create_line(int(w / 2 * coords[0]),
@@ -103,6 +112,7 @@ class Vision(tk.Tk):
                                 width=1, fill='white')
 
     def on_start(self):
+        """Start algorithm."""
         alg_idx = self.algs_trans.index(self.variable_a.get())
         self.alg = self.algs[alg_idx]
         func_idx = self.test_f_trans.index(self.variable_t.get())
@@ -111,6 +121,7 @@ class Vision(tk.Tk):
         self.on_step()
 
     def on_step(self):
+        """Make next step of algorithm."""
         if self.gen:
             try:
                 res = next(self.gen)
@@ -128,6 +139,7 @@ class Vision(tk.Tk):
                 self.gen = None
 
     def on_end(self):
+        """Delete generator of ended algorithm."""
         if self.gen:
             try:
                 while self.gen:
@@ -136,11 +148,13 @@ class Vision(tk.Tk):
                 self.gen = None
 
     def put_img(self, img_name):
+        """Upload function image."""
         img_name = self.langs['en'].gettext(img_name)
         self.img = tk.PhotoImage(file=f'img/{img_name}.png')
         self.canvas.create_image((250, 250), image=self.img)
 
     def build_pic(self):
+        """Build canvas with image."""
         self.left_pic_frame = tk.Frame(self, bg=self.bg)
         self.left_pic_frame.grid(column=0, row=0)
         self.canvas = tk.Canvas(self.left_pic_frame,
@@ -151,6 +165,7 @@ class Vision(tk.Tk):
         self.left_pic_frame.rowconfigure(0, weight=1)
 
     def build_control(self):
+        """Build execution control panel."""
         self.middle_control_frame = tk.Frame(self, bg=self.bg)
         self.middle_control_frame.grid(column=1, row=0)
         for i in range(5):
@@ -190,6 +205,7 @@ class Vision(tk.Tk):
         self.b_end.grid(column=0, row=6, sticky='NEWS')
 
     def build_setting(self):
+        """Build functions and algorithms setting panel."""
         self.rigth_setting_frame = tk.Frame(self, bg=self.bg)
         self.rigth_setting_frame.grid(column=2, row=0)
         self.test_func = tk.Label(self.rigth_setting_frame,
